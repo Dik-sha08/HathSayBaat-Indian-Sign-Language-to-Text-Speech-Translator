@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HathSayBaat</title>
+    <!-- Use correct Flask static path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <!-- Remixicons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <h2 id="main-logo">
+        HathSayBaat
+        <img
+          src="{{ url_for('static', filename='assets/images/icons/icon-black.svg') }}"
+          alt="hand sign image"
+          class="logo-image"
+        />
+      </h2>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#get-started">Get Started</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <!-- UPDATED: Points to Login Page -->
+            <a href="{{ url_for('login') }}" class="cta">Try it now</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="socials">
+        <ul>
+          <li>
+            <a href="https://github.com/Dik-sha08" target="_blank">
+              <i class="ri-github-fill"></i>
+            </a>
+          </li>
+          <li><a href="https://x.com/DIKSHAJOSHI_07"><i class="ri-twitter-x-fill"></i></a></li>
+          <div id="vertical-line"></div>
+          <li><a id="dark-theme"><i class="ri-sun-line"></i></a></li>
+          <li><a href="#"><i class="ri-translate-2"></i></a></li>
+          <!-- UPDATED: Points to Login Page -->
+          <li><a href="{{ url_for('login') }}">Log in</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <div class="home-page" id="home">
+        <div class="left">
+          <h1>Empowering Communication with Indian Sign Language</h1>
+          <span>Aiming to help the deaf and hard of hearing community to make communication easier.</span>
+          <div class="links">
+            <!-- UPDATED: Points to Login Page (Assuming user must login first) -->
+            <!-- If you want this to redirect to login if not logged in, point to 'model_page' but ensure @login_required is in app.py -->
+            <a href="{{ url_for('login') }}" id="cta-home">
+              Explore the Model &nbsp;<i class="ri-arrow-right-double-line"></i>
+            </a>
+          </div>
+        </div>
+        <img
+          class="banner"
+          src="{{ url_for('static', filename='assets/images/10100507.jpg') }}"
+          alt="banner image"
+        />
+      </div>
+
+      <div class="features" id="features">
+        <div class="feature-header">
+          <h1>Main Features</h1>
+          <span>Key features of our sign language translator.</span>
+        </div>
+        
+        <!-- Feature 1 -->
+        <div class="card">
+          <div class="left">
+            <i class="ri-bar-chart-box-fill"></i>
+            <h2>Real Time Sign Conversion</h2>
+            <p>Real-time ISL → text/speech translation.</p>
+            <ul class="points">
+              <li><i class="ri-checkbox-circle-line"></i>Instant Translation</li>
+              <li><i class="ri-checkbox-circle-line"></i>High Accuracy</li>
+              <li><i class="ri-checkbox-circle-line"></i>Supports ISL</li>
+            </ul>
+            <!-- UPDATED: Points to Login Page -->
+            <a href="{{ url_for('login') }}" class="cta">Check it out &nbsp;<i class="ri-arrow-right-line"></i></a>
+          </div>
+          <video loop muted autoplay class="media">
+            <source src="{{ url_for('static', filename='assets/videos/feature-1-live.mp4') }}" type="video/mp4" />
+          </video>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card">
+          <video loop muted autoplay class="media">
+            <source src="{{ url_for('static', filename='assets/videos/feature-2-video-calls.mp4') }}" type="video/mp4" />
+          </video>
+          <div class="left">
+            <i class="ri-live-line"></i>
+            <h2>Integration in Video Calls</h2>
+            <p>Make video calls with automatic ISL translation.</p>
+            <ul class="points">
+              <li><i class="ri-checkbox-circle-line"></i>Live Video Call Integration</li>
+              <li><i class="ri-checkbox-circle-line"></i>Speech and Text Conversion</li>
+            </ul>
+            <!-- UPDATED: Points to Video Call Page (will redirect to login if not authenticated) -->
+            <a href="{{ url_for('video_call') }}" class="cta">Video Calling &nbsp;<i class="ri-arrow-right-line"></i></a>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="card">
+          <div class="left">
+            <i class="ri-translate-2"></i>
+            <h2>Multi-Language Support</h2>
+            <p>Our model supports multiple Indian languages.</p>
+            <ul class="points">
+              <li><i class="ri-checkbox-circle-line"></i>Supports 10+ Languages</li>
+              <li><i class="ri-checkbox-circle-line"></i>Simple UI</li>
+            </ul>
+            <!-- UPDATED: Points to Login Page -->
+            <!--<a href="{{ url_for('login') }}" class="cta">Different Languages &nbsp;<i class="ri-arrow-right-line"></i></a>-->
+            <a href="{{ url_for('languages_page') }}" class="cta">Different Languages &nbsp;<i class="ri-arrow-right-line"></i></a>
+          </div>
+          <img
+            src="{{ url_for('static', filename='assets/images/feature-3-multi-language.png') }}"
+            alt="multiple languages Support"
+            class="media"
+          />
+        </div>
+        
+        <div class="small-cards">
+          <div class="small-card">
+            <i class="ri-user-follow-line"></i>
+            <h2>User Friendly Interface</h2>
+            <p>HathSayBaat has a user friendly interface which allows non-technical users to navigate easily.</p>
+          </div>
+          <div class="small-card">
+            <i class="ri-folder-upload-line"></i>
+            <h2>Video Uploading</h2>
+            <p>You can also upload pre-recorded videos and process them to get the relevant text or speech.</p>
+          </div>
+          <div class="small-card">
+            <i class="ri-file-edit-line"></i>
+            <h2>Personalization</h2>
+            <p>User can personalize their caption colors, font-sizes, preferred languages, and profile.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="get-started" id="get-started">
+        <div class="started-header">
+          <h1>Get Started</h1>
+          <span>Here are few steps to get started with our services.</span>
+        </div>
+        <div class="help-video">
+          <video autoplay muted loop class="media">
+            <source src="{{ url_for('static', filename='assets/videos/feature-2-video-calls.mp4') }}" />
+          </video>
+        </div>
+      </div>
+
+      <div class="contact" id="contact">
+        <div class="contact-header">
+          <h1>Contact Us</h1>
+          <span>Having an issue or want to help us with something? Here is how you can reach us.</span>
+        </div>
+        <div class="background">
+          <div class="container">
+            <div class="screen">
+              <div class="screen-body">
+                <div class="screen-body-item left">
+                  <div class="app-title">
+                    <span>CONTACT</span>
+                    <span>US</span>
+                  </div>
+                </div>
+                <div class="screen-body-item">
+                  <div class="app-form">
+                    <div class="app-form-group">
+                      <input class="app-form-control" placeholder="NAME" />
+                    </div>
+                    <div class="app-form-group">
+                      <input class="app-form-control" placeholder="EMAIL" />
+                    </div>
+                    <div class="app-form-group">
+                      <input class="app-form-control" placeholder="CONTACT NO" />
+                    </div>
+                    <div class="app-form-group message">
+                      <input class="app-form-control" placeholder="MESSAGE" />
+                    </div>
+                    <div class="app-form-group buttons">
+                      <button class="app-form-button">CANCEL</button>
+                      <button class="app-form-button">SEND</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#home" id="go-to-top"><i class="ri-arrow-up-double-fill"></i></a>
+    </main>
+
+    <footer>
+      <p>&copy; Copyright, Diksha 2025.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+  </body>
+</html>

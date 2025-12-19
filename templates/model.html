@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HathSayBaat - Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='model.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+      /* Custom compact styles for this page */
+      .live-model {
+        padding: 1.5rem !important;
+        margin-top: 1rem !important;
+        max-width: 900px !important;
+      }
+      .controls-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px; /* Tighter gap */
+        width: 100%;
+        margin-top: 10px;
+      }
+      #sentence-bar {
+        width: 100%;
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+        margin-top: 5px;
+      }
+      h2 { margin-bottom: 10px; font-size: 1.5rem; }
+      h3 { margin: 5px 0; font-size: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h2 id="main-logo">
+        HathSayBaat
+        <img
+          src="{{ url_for('static', filename='assets/images/icons/icon-black.svg') }}"
+          alt="hand sign image"
+          class="logo-image"
+        />
+      </h2>
+      <a href="#live-model" id="model-nav-tag">Testing Model</a>
+      <div class="socials">
+        <ul>
+          <li>
+            <a href="https://github.com/kamal-stark-dev/Indian-Sign-Language-Translation-SIH" target="_blank">
+              <i class="ri-github-fill"></i>
+            </a>
+          </li>
+          <li><a href="#"><i class="ri-twitter-x-fill"></i></a></li>
+          <div id="vertical-line"></div>
+          <li><a id="dark-theme"><i class="ri-sun-line"></i></a></li>
+          <li><a href="#"><i class="ri-translate-2"></i></a></li>
+          <li><a href="#">Log in</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <div class="live-model" id="live-model">
+        <h2>HathSayBaat - Test Phase Model</h2>
+        
+        <video 
+            id="videoElement" 
+            autoplay 
+            playsinline 
+            style="
+                width: 70%; 
+                height: 300px; 
+                background-color: #000;
+                border-radius: 12px; 
+                object-fit: cover;
+                box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+                transform: scaleX(-1);
+            "
+        ></video>
+        
+        <canvas id="canvasElement" style="display:none;"></canvas>
+
+        <div class="controls-container">
+            <button id="startBtn" class="cta" style="cursor: pointer; border: none; font-size: 1rem; padding: 0.6rem 1.5rem;">
+                Start Camera
+            </button>
+
+            <h3>
+                Prediction: 
+                <span id="predictionResult" style="color: var(--highlight-color); font-size: 1.8rem; font-weight: bold;">
+                    Waiting...
+                </span>
+            </h3>
+
+            <div id="sentence-bar">
+                <p style="font-size: 0.85rem; color: #888; margin-bottom: 2px;">Constructed Sentence:</p>
+                <p id="sentenceOutput" style="font-size: 1.2rem; color: #333; font-weight: bold; min-height: 24px; margin: 0;">...</p>
+            </div>
+
+            <button id="clearBtn" class="cta" style="background-color: #6c757d; font-size: 0.85rem; padding: 0.4rem 1rem;">
+                Clear Sentence
+            </button>
+        </div>
+
+        <span style="margin-top: 15px; color: #737373; font-size: 0.9rem;">Try to make different signs with your hands.</span>
+      </div>
+    </main>
+
+    <footer style="padding: 10px; font-size: 0.9rem;">
+      <p>&copy; Copyright, @Diksha 2025.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='model.js') }}"></script>
+  </body>
+</html>

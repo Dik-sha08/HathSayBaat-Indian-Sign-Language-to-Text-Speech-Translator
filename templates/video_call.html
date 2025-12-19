@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HathSayBaat - Video Call</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        /* Dynamic Background Animation */
+        body { 
+            background: linear-gradient(-45deg, #1a1a1a, #2c3e50, #000000, #2c3e50);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white; height: 100vh; overflow: hidden; display: flex; flex-direction: column; 
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .call-wrapper {
+            flex: 1; position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;
+        }
+
+        /* Remote User (Big Screen) */
+        .remote-container {
+            width: 90%; height: 85%; background: #000; border-radius: 15px; 
+            overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex; justify-content: center; align-items: center;
+        }
+        #remoteVideo {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        
+        /* Placeholder when video is loading */
+        .connecting-text {
+            position: absolute; color: #aaa; font-size: 1.5rem; letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* Local User (You) - Floating PIP */
+        .local-video-card {
+            position: absolute; bottom: 30px; right: 30px;
+            width: 260px; height: 160px;
+            background: #222; border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            border: 2px solid #444; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .local-video-card:hover { transform: scale(1.05); border-color: #b4e380; }
+        #localVideo {
+            width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);
+        }
+
+        /* Translation Badge */
+        .captions-box {
+            position: absolute; bottom: 40px; left: 40px;
+            background: rgba(20, 20, 20, 0.85); color: #fff;
+            padding: 12px 24px; border-radius: 30px;
+            font-size: 1.1rem; font-weight: 500;
+            display: flex; align-items: center; gap: 10px;
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .captions-box span { color: #b4e380; font-weight: bold; font-size: 1.3rem; }
+
+        /* Controls Bar */
+        .controls {
+            height: 90px; background-color: rgba(32, 33, 36, 0.95); 
+            display: flex; justify-content: center; align-items: center; gap: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        .btn-group {
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+        }
+        
+        .btn {
+            width: 55px; height: 55px; border-radius: 50%; border: none;
+            background-color: #3c4043; color: white; font-size: 1.3rem; cursor: pointer;
+            transition: 0.2s; display: flex; justify-content: center; align-items: center;
+        }
+        .btn:hover { background-color: #5f6368; transform: translateY(-3px); }
+        
+        .btn.red { background-color: #ea4335; width: 70px; border-radius: 20px; }
+        .btn.red:hover { background-color: #d93025; }
+
+        .btn-label { font-size: 0.75rem; color: #ccc; }
+
+        .status-badge {
+            position: absolute; top: 20px; left: 20px; 
+            background: rgba(234, 67, 53, 0.9); padding: 6px 12px; 
+            border-radius: 4px; font-weight: bold; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+        
+        #canvasElement { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="call-wrapper">
+        <div class="status-badge"><i class="ri-record-circle-line"></i> REC | LIVE</div>
+
+        <div class="remote-container">
+            <div class="connecting-text">Connecting to Remote User...</div>
+            <video id="remoteVideo" autoplay loop muted playsinline>
+                <source src="{{ url_for('static', filename='assets/sign_videos/Hello.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="captions-box">
+            <i class="ri-translate-2"></i>
+            <span><span id="predictionResult">Detecting...</span></span>
+        </div>
+
+        <div class="local-video-card">
+            <video id="localVideo" autoplay playsinline muted></video>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="btn-group">
+            <button class="btn" onclick="toggleMute(this)" title="Mute/Unmute">
+                <i class="ri-mic-line"></i>
+            </button>
+            <span class="btn-label">Mute</span>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" onclick="toggleVideo(this)" title="Camera On/Off">
+                <i class="ri-camera-line"></i>
+            </button>
+            <span class="btn-label">Video</span>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn red" onclick="window.location.href='/'" title="End Call">
+                <i class="ri-phone-end-line"></i>
+            </button>
+            <span class="btn-label">End Call</span>
+        </div>
+    </div>
+
+    <canvas id="canvasElement"></canvas>
+
+    <script>
+        const video = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+        const loadingText = document.querySelector('.connecting-text');
+        const canvas = document.getElementById('canvasElement');
+        const context = canvas.getContext('2d');
+        const resultSpan = document.getElementById('predictionResult');
+        let isStreaming = false;
+
+        // Hide "Connecting..." when remote video starts playing
+        remoteVideo.onplaying = () => {
+            loadingText.style.display = 'none';
+        };
+
+        // 1. Start Camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+                isStreaming = true;
+                setInterval(sendFrame, 200);
+            })
+            .catch(err => alert("Camera blocked! Please allow access."));
+
+        // 2. Prediction Logic
+        function sendFrame() {
+            if (!isStreaming) return;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg', 0.5);
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: dataURL }),
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.prediction) resultSpan.innerText = data.prediction;
+            })
+            .catch(e => console.log(e));
+        }
+
+        // 3. Button Logic
+        function toggleMute(btn) {
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('ri-mic-line')) {
+                icon.className = 'ri-mic-off-line';
+                btn.style.backgroundColor = '#ea4335';
+            } else {
+                icon.className = 'ri-mic-line';
+                btn.style.backgroundColor = '#3c4043';
+            }
+        }
+
+        function toggleVideo(btn) {
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('ri-camera-line')) {
+                icon.className = 'ri-camera-off-line';
+                btn.style.backgroundColor = '#ea4335';
+                video.style.opacity = '0'; // Hide video stream
+            } else {
+                icon.className = 'ri-camera-line';
+                btn.style.backgroundColor = '#3c4043';
+                video.style.opacity = '1'; // Show video stream
+            }
+        }
+    </script>
+</body>
+</html>

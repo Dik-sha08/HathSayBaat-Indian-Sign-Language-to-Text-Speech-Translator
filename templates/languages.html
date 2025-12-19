@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Language - HathSayBaat</title>
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    
+    <!-- Animations & Hover Effects (Inline support nahi karta isliye yahan hai) -->
+    <style>
+        /* Card Uthne ka effect */
+        .lang-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(180, 227, 128, 0.3) !important;
+            border-color: #b4e380 !important;
+        }
+        /* Back Button ka effect */
+        .back-btn:hover {
+            background: white !important;
+            color: #b4e380 !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+        }
+        /* Disabled Card Shake Animation */
+        .disabled-card:hover {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #333;">
+
+    <h1 style="font-size: 2.8rem; margin-bottom: 10px; color: #2c3e50; font-weight: 700; text-align: center;">
+        <i class="ri-translate-2"></i> Language Hub
+    </h1>
+    
+    <p style="color: #7f8c8d; margin-bottom: 50px; font-size: 1.1rem; text-align: center;">
+        Select your preferred language for translation & voice.
+    </p>
+
+    <!-- Grid Container -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; width: 90%; max-width: 900px; margin-bottom: 20px;">
+
+        <!-- 1. English Option -->
+        <a href="{{ url_for('model_page', lang='en-US') }}" class="lang-card" 
+           style="background: white; padding: 35px 20px; border-radius: 20px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;">
+            <div style="font-size: 3.5rem; margin-bottom: 15px;">🇺🇸</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #2c3e50;">English</div>
+            <div style="color: #b4e380; font-weight: 600; margin-top: 5px; font-size: 1.1rem;">Default</div>
+        </a>
+
+        <!-- 2. Hindi Option -->
+        <a href="{{ url_for('model_page', lang='hi-IN') }}" class="lang-card" 
+           style="background: white; padding: 35px 20px; border-radius: 20px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;">
+            <div style="font-size: 3.5rem; margin-bottom: 15px;">🇮🇳</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #2c3e50;">Hindi</div>
+            <div style="color: #b4e380; font-weight: 600; margin-top: 5px; font-size: 1.1rem;">हिंदी</div>
+        </a>
+
+        <!-- 3. Marathi Option (Disabled) -->
+        <div class="disabled-card" 
+             style="background: #f8f9fa; padding: 35px 20px; border-radius: 20px; text-align: center; color: #333; border: 2px solid #eee; cursor: not-allowed; opacity: 0.9; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;">
+            
+            <!-- Badge -->
+            <div style="position: absolute; top: 20px; right: -32px; background: #95a5a6; color: white; padding: 5px 35px; font-size: 0.7rem; font-weight: bold; transform: rotate(45deg); text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                Soon
+            </div>
+
+            <div style="font-size: 3.5rem; margin-bottom: 15px; filter: grayscale(100%); opacity: 0.5;">🚩</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #2c3e50; filter: grayscale(100%); opacity: 0.5;">Marathi</div>
+            <div style="color: #b4e380; font-weight: 600; margin-top: 5px; font-size: 1.1rem; filter: grayscale(100%); opacity: 0.5;">मराठी</div>
+        </div>
+
+        <!-- 4. Punjabi Option (Disabled) -->
+        <div class="disabled-card" 
+             style="background: #f8f9fa; padding: 35px 20px; border-radius: 20px; text-align: center; color: #333; border: 2px solid #eee; cursor: not-allowed; opacity: 0.9; display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;">
+            
+            <!-- Badge -->
+            <div style="position: absolute; top: 20px; right: -32px; background: #95a5a6; color: white; padding: 5px 35px; font-size: 0.7rem; font-weight: bold; transform: rotate(45deg); text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                Soon
+            </div>
+
+            <div style="font-size: 3.5rem; margin-bottom: 15px; filter: grayscale(100%); opacity: 0.5;">🌾</div>
+            <div style="font-size: 1.5rem; font-weight: bold; color: #2c3e50; filter: grayscale(100%); opacity: 0.5;">Punjabi</div>
+            <div style="color: #b4e380; font-weight: 600; margin-top: 5px; font-size: 1.1rem; filter: grayscale(100%); opacity: 0.5;">ਪੰਜਾਬੀ</div>
+        </div>
+
+    </div>
+
+    <!-- Back Button -->
+    <a href="/" class="back-btn" 
+       style="margin-top: 40px; color: #555; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600; padding: 10px 25px; border-radius: 30px; transition: 0.3s;">
+        <i class="ri-arrow-left-line"></i> Back to Home
+    </a>
+
+</body>
+</html>

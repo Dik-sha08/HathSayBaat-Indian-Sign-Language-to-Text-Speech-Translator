@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - HathSayBaat</title>
+    <!-- Icons -->
+    <link href="[https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css](https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css)" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .register-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            width: 400px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s ease;
+        }
+
+        .register-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .register-card h2 {
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b4e380;
+            font-size: 1.2rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            color: #333;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #b4e380;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(180, 227, 128, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #b4e380;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(180, 227, 128, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: #a3d66e;
+            box-shadow: 0 6px 20px rgba(180, 227, 128, 0.4);
+        }
+
+        .links {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .links a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 5px;
+            transition: color 0.2s;
+        }
+
+        .links a:hover {
+            color: #b4e380;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <h2>Create Account</h2>
+        <p class="subtitle">Join us to start communicating freely</p>
+
+        <form method="POST" action="/register">
+            <div class="input-group">
+                <i class="ri-user-add-line"></i>
+                <input type="text" name="username" placeholder="Choose Username" required>
+            </div>
+
+            <div class="input-group">
+                <i class="ri-lock-2-line"></i>
+                <input type="password" name="password" placeholder="Create Password" required>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="links">
+            Already have an account? <a href="/login">Log In</a>
+        </div>
+    </div>
+
+</body>
+</html>
